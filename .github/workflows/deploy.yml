@@ -8,20 +8,11 @@ jobs:
     release:
       name: Publish
       runs-on: ubuntu-latest
-      if: github.event.workflow_run.conclusion == 'success'
+      if: github.event.workflow_run.conclusion == 'success' && github.ref_type == 'tag'
       timeout-minutes: 10
       steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Check Release Tag
-        run: |
-            TAG=$(git describe --tags --exact-match 2>/dev/null || echo "")
-            if [[ -z "$TAG" || ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-                echo TAG: $TAG
-                echo "No valid release tag found on this branch."
-                exit 1
-            fi
-            echo "Found valid release tag: $TAG"
       - name: Publish
         run: |
           echo "Publishing"
