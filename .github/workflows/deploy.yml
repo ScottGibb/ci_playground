@@ -16,7 +16,7 @@ jobs:
           - name: Install nightly
             run: rustup toolchain add --component=rustfmt nightly
           - name: Checks
-            run: ./ci.sh
+            run: bash ./ci.sh
 
   release:
     name: Publish to crates.io
