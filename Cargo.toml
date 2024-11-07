@@ -5,5 +5,3 @@ edition = "2021"
 
 [dependencies]
 
-[registries]
-staging = { index = "https://github.com/rust-lang/staging.crates.io-index" }
