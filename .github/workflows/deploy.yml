@@ -13,12 +13,14 @@ jobs:
       steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Check Version
+      - name: Check Release Tag
         run: |
-          echo "Checking version"
-          echo "Version: ${{ github.event.workflow_run.conclusion }}"
-          echo "Git Version Tag: ${{ github.event.workflow_run.head_commit.message }}"
-
+            TAG=$(git describe --tags --exact-match 2>/dev/null || echo "")
+            if [[ -z "$TAG" || ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                echo "No valid release tag found on this branch."
+                exit 1
+            fi
+            echo "Found valid release tag: $TAG"
       - name: Publish
         run: |
           echo "Publishing"
