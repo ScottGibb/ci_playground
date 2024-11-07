@@ -1,28 +1,42 @@
 name: Release
 
 on:
-  workflow_run: # Only runs on main branch
-      workflows: ["Tests"]
-      types:
-        - completed
+ push:
+   tags:
+    - 'v[0-9]+.[0-9]+.[0-9]+'
 
 permissions:
   contents: write
   
 jobs:
-  release:
-    name: Publish to crates.io
+  tests:
+    name: Run tests
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success'
-    timeout-minutes: 10
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
         fetch-tags: true
     
-  
+    - name: Set up Rust
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        toolchain: stable
 
+    - name: Run tests
+      run: cargo test
+
+  release:
+    name: Publish to crates.io
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: tests
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-tags: true
+    
     - name: Set up Rust
       uses: dtolnay/rust-toolchain@stable
       with:
@@ -30,7 +44,7 @@ jobs:
 
     - name: Build project
       run: cargo build --release
-      
+
     - name: Verify Version
       run: |
         TAG_VERSION=${GITHUB_REF#refs/tags/v}
