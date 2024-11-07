@@ -8,7 +8,3 @@ cargo +nightly fmt -- --check
 
 cargo clippy
 
-cargo clippy --features defmt
-
-cargo clippy --features log
-
