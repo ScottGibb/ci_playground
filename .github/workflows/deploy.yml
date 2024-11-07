@@ -17,6 +17,7 @@ jobs:
         run: |
             TAG=$(git describe --tags --exact-match 2>/dev/null || echo "")
             if [[ -z "$TAG" || ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                echo TAG: $TAG
                 echo "No valid release tag found on this branch."
                 exit 1
             fi
