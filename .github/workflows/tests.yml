@@ -11,7 +11,7 @@ jobs:
             - name: Testing
               run: |
                   echo "Running tests"
-            - name: Fail
-              run: |
-                  echo "Failing"
-                  exit 1
+            # - name: Fail
+            #   run: |
+            #       echo "Failing"
+            #       exit 1
