@@ -6,16 +6,10 @@ on:
 jobs:
     tests:
         runs-on: ubuntu-latest
-
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-          
-            - name: Set up Rust
-              uses: dtolnay/rust-toolchain@stable
-              with:
-                toolchain: stable
-                
-            - name: Run tests
-              run: cargo test
+          - uses: actions/checkout@v4
+          - name: Install nightly
+            run: rustup toolchain add --component=rustfmt nightly
+          - name: Checks
+            run: ./ci.sh
                 
