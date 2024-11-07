@@ -16,4 +16,3 @@ jobs:
       - name: Publish
         run: |
           echo "Publishing"
-          exit -1
