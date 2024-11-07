@@ -49,6 +49,7 @@ jobs:
           echo "Version mismatch: tag is $TAG_VERSION but Cargo.toml is $CARGO_VERSION"
           exit 1  # Exits with a non-zero status to fail the workflow
         fi
+        echo "Version is $TAG_VERSION" and matches Cargo.toml
       shell: bash
 
     - name: Create GitHub release
