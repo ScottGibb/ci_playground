@@ -5,17 +5,14 @@ on:
         types:
           - completed
 jobs:
-    debug:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Debug
-          run: echo "Debugging"
     release:
-      name: Publish to crates.io
+      name: Publish
       runs-on: ubuntu-latest
       if: startsWith(github.ref, 'refs/tags/v') && github.event.workflow_run.conclusion == 'success'
       timeout-minutes: 10
       steps:
       - name: Checkout code
         uses: actions/checkout@v2
-  
+      - name: Publish
+        run: |
+          echo "Publishing"
