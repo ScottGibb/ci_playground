@@ -2,7 +2,7 @@ name: Release
 
 on:
   workflow_run: # Only runs on main branch
-      workflows: ["Check Rust"]
+      workflows: ["Tests"]
       types:
         - completed
 
