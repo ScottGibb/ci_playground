@@ -16,6 +16,6 @@ jobs:
         with:
           toolchain: stable
       - name: Run cargo bloat
-        uses: Kobzol/cargo-bloat-action@github-actions-cache        
+        uses: wsxiaoys/cargo-bloat-action@github-actions-cache        
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
