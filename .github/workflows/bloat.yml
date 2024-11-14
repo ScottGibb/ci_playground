@@ -23,7 +23,8 @@ jobs:
               run: cargo install cargo-bloat
             - name: Run cargo bloat
               run: |
-                cargo bloat --release --crates >> ./bloat.txt
+                echo "Bloat report" > ./bloat.txt &&\
+                cargo bloat --release >> ./bloat.txt &&\
             - name: Post results to PR
               uses: marocchino/sticky-pull-request-comment@v2
               with:
