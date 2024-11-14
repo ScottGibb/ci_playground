@@ -1,17 +1,18 @@
 name: Bloat
 
 on:
-    push:
-        branches:
-            - main
-    pull_request:
+  pull_request:
+    types: [opened]
+  issue_comment:
+    types: [created, edited, deleted]
 
 permissions:
   pull-requests: write
 
 jobs:
-    cargo_bloat_esp32:
-        name: Cargo Bloat trouble esp32 example
+    cargo_bloat:
+        if: contains(github.event.comment.html_url, '/pull/') || contains(github.event.comment.body, '/bloat')    # check if the comments come from pull request, exclude those from issue.
+        name: Cargo Bloat
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -23,15 +24,13 @@ jobs:
               run: cargo install cargo-bloat
             - name: Run cargo bloat
               run: |
-                # cd examples/esp32 &&\
-                cargo bloat --release --crates
+                echo "# Bloat report" > ./bloat.txt &&\
+                cargo bloat --release >> ./bloat.txt
             - name: Post results to PR
               uses: marocchino/sticky-pull-request-comment@v2
               with:
                 hide_and_recreate: true
-                header: ESP32 Bloat Report
-                message: |
-                    \`\`\`
-                    $(cargo bloat --release --crates)
-                    \`\`\`
+                header: Bloat Report
+                path: ./bloat.txt 
+                  
             
