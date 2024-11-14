@@ -1,17 +1,18 @@
 name: Bloat
 
 on:
-    push:
-        branches:
-            - main
-    pull_request:
+  pull_request:
+    types: [opened]
+  issue_comment:
+    types: [created]
 
 permissions:
   pull-requests: write
 
 jobs:
-    cargo_bloat_esp32:
-        name: Cargo Bloat trouble esp32 example
+    cargo_bloat:
+        if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/bloat')    # check if the comments come from pull request, exclude those from issue.
+        name: Cargo Bloat
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
