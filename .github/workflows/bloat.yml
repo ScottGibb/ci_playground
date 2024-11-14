@@ -23,14 +23,12 @@ jobs:
               run: cargo install cargo-bloat
             - name: Run cargo bloat
               run: |
-                cargo bloat --release --crates
+                cargo bloat --release --crates >> ./bloat.txt
             - name: Post results to PR
               uses: marocchino/sticky-pull-request-comment@v2
               with:
                 hide_and_recreate: true
                 header: Bloat Report
-                message: |
-                    \`\`\`
-                    $(cargo bloat --release --crates)
-                    \`\`\`
+                path: ./bloat.txt 
+                  
             
