@@ -16,6 +16,6 @@ jobs:
         with:
           toolchain: stable
       - name: Run cargo bloat
-        uses: wsxiaoys/cargo-bloat-action@github-actions-cache        
+        uses: Reloaded-Project/devops-cargo-bloat-action@v1  
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
