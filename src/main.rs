@@ -18,3 +18,8 @@ mod tests {
     //     assert_eq!(result, 4);
     // }
 }
+
+pub fn main() {
+    let result = add(2, 2);
+    println!("Result: {}", result);
+}
