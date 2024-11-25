@@ -7,4 +7,3 @@ export RUSTFLAGS=-Dwarnings
 cargo +nightly fmt -- --check
 
 cargo clippy
-
