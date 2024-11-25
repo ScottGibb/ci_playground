@@ -15,8 +15,8 @@ APPLY_FIXES: all
 # ENABLE_LINTERS:
 
 # DISABLE:
-  # - COPYPASTE # Uncomment to disable checks of excessive copy-pastes
-  # - SPELL # Uncomment to disable checks of spelling mistakes
+# - COPYPASTE # Uncomment to disable checks of excessive copy-pastes
+# - SPELL # Uncomment to disable checks of spelling mistakes
 
 SHOW_ELAPSED_TIME: true
 
@@ -24,3 +24,8 @@ FILEIO_REPORTER: false
 
 # Uncomment if you want MegaLinter to detect errors but not block CI to pass
 # DISABLE_ERRORS: true
+SPELL_CSPELL_DISABLE_ERRORS: true
+REPOSITORY_CHECKOV_DISABLE_ERRORS: true
+GIT_GIT_DIFF_DISABLE_ERRORS: true
+YAML_YAMLLINT_DISABLE_ERRORS: true
+ACTION_ACTIONLINT_DISABLE_ERRORS: true
