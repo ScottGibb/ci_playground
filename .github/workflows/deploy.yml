@@ -1,22 +1,22 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - "v[0-9]+.[0-9]+.[0-9]+"
+ push:
+   tags:
+    - 'v[0-9]+.[0-9]+.[0-9]+'
 
 permissions:
   contents: write
-
-jobs:
-  tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install nightly
-        run: rustup toolchain add --component=rustfmt nightly
-      - name: Checks
-        run: bash ./ci.sh
+  
+jobs: 
+  tests: 
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v4
+          - name: Install nightly
+            run: rustup toolchain add --component=rustfmt nightly
+          - name: Checks
+            run: bash ./ci.sh
 
   release:
     name: Publish to crates.io
@@ -25,42 +25,42 @@ jobs:
     needs: tests
     if: github.ref == 'refs/heads/main'
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Rust
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        toolchain: stable
 
-      - name: Set up Rust
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          toolchain: stable
+    - name: Build project
+      run: cargo build --release
 
-      - name: Build project
-        run: cargo build --release
+    - name: Verify Version
+      run: |
+        TAG_VERSION=${GITHUB_REF#refs/tags/v}
+        CARGO_VERSION=$(grep '^version =' Cargo.toml | sed -E 's/version = "([^"]+)"/\1/')
+        if [ "$TAG_VERSION" != "$CARGO_VERSION" ]; then
+          echo "Version mismatch: tag is $TAG_VERSION but Cargo.toml is $CARGO_VERSION"
+          exit 1  # Exits with a non-zero status to fail the workflow
+        fi
+        echo "Version is $TAG_VERSION" and matches Cargo.toml
+      shell: bash
 
-      - name: Verify Version
-        run: |
-          TAG_VERSION=${GITHUB_REF#refs/tags/v}
-          CARGO_VERSION=$(grep '^version =' Cargo.toml | sed -E 's/version = "([^"]+)"/\1/')
-          if [ "$TAG_VERSION" != "$CARGO_VERSION" ]; then
-            echo "Version mismatch: tag is $TAG_VERSION but Cargo.toml is $CARGO_VERSION"
-            exit 1  # Exits with a non-zero status to fail the workflow
-          fi
-          echo "Version is $TAG_VERSION" and matches Cargo.toml
-        shell: bash
+    - name: Create GitHub release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref_name }}
+      run: |
+        gh release create "$tag" \
+            --repo="$GITHUB_REPOSITORY" \
+            --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+            --generate-notes
 
-      - name: Create GitHub release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
-        run: |
-          gh release create "$tag" \
-              --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
-              --generate-notes
-
-      - name: Publish to crates.io
-        env:
-          # CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-          CARGO_REGISTRIES_STAGING_TOKEN: ${{ secrets.CARGO_REGISTRIES_STAGING_TOKEN }}
-        run: |
-          echo "Publishing to crates.io"  
-          cargo publish --registry=staging
+    - name: Publish to crates.io
+      env:
+        # CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        CARGO_REGISTRIES_STAGING_TOKEN: ${{ secrets.CARGO_REGISTRIES_STAGING_TOKEN }}
+      run: |
+        echo "Publishing to crates.io"  
+        cargo publish --registry=staging
