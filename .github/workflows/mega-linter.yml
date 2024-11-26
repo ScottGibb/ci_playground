@@ -111,7 +111,7 @@ jobs:
           path: |
             megalinter-reports
             mega-linter.log
-            
+
       - name: Determine base branch
         id: determine_base
         run: |
@@ -126,8 +126,6 @@ jobs:
       - name: Create Pull Request with applied fixes
         uses: peter-evans/create-pull-request@v6
         id: cpr
-        with:
-          base: ${{ env.BASE_BRANCH }}
         if: >-
           steps.ml.outputs.has_updated_sources == 1 &&
           (
@@ -142,6 +140,7 @@ jobs:
           !contains(github.event.head_commit.message, 'skip fix')
         with:
           token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+          base: ${{ env.BASE_BRANCH }}
           commit-message: "[MegaLinter] Apply linters automatic fixes"
           title: "[MegaLinter] Apply linters automatic fixes"
           labels: bot
