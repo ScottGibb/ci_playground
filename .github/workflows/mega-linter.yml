@@ -10,7 +10,7 @@ on:
   # (not recommended if you don't pay for GH Actions)
   push:
     branches:
-      - '*'
+      - '**'
   pull_request:
     branches:
       - main
