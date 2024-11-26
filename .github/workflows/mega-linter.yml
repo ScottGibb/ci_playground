@@ -111,12 +111,23 @@ jobs:
           path: |
             megalinter-reports
             mega-linter.log
-
+            
+      - name: Determine base branch
+        id: determine_base
+        run: |
+              if [ "${{ github.base_ref }}" != "" ]; then
+                echo "BASE_BRANCH=${{ github.base_ref }}" >> $GITHUB_ENV
+              else
+                echo "BASE_BRANCH=main" >> $GITHUB_ENV  # Default to main if base_ref is not set
+              fi
+    
       # Create pull request if applicable
       # (for now works only on PR from same repository, not from forks)
       - name: Create Pull Request with applied fixes
         uses: peter-evans/create-pull-request@v6
         id: cpr
+        with:
+          base: ${{ env.BASE_BRANCH }}
         if: >-
           steps.ml.outputs.has_updated_sources == 1 &&
           (
