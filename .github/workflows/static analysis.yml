@@ -3,31 +3,31 @@ name: Static Analysis
 on: [push, pull_request]
 
 jobs:
-    markdownlint:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-          
-            - name: Install markdownlint-cli
-              run: npm install -g markdownlint-cli
+  markdownlint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-            - name: Run markdownlint
-              run: markdownlint '**/*.md'
+      - name: Install markdownlint-cli
+        run: npm install -g markdownlint-cli
 
-    rust-clippy:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v2
+      - name: Run markdownlint
+        run: markdownlint '**/*.md'
 
-            - name: Install Rust
-              uses: actions-rs/toolchain@v1
-              with:
-                    toolchain: stable
+  rust-clippy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-            - name: Install clippy
-              run: rustup component add clippy
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
 
-            - name: Run clippy
-              run: cargo clippy --all-targets --all-features -- -D warnings
+      - name: Install clippy
+        run: rustup component add clippy
+
+      - name: Run clippy
+        run: cargo clippy --all-targets --all-features -- -D warnings

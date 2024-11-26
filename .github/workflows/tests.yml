@@ -1,15 +1,14 @@
 name: Tests
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 jobs:
-    tests:
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v4
-          - name: Install nightly
-            run: rustup toolchain add --component=rustfmt nightly
-          - name: Checks
-            run: bash ./ci.sh
-                
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install nightly
+        run: rustup toolchain add --component=rustfmt nightly
+      - name: Checks
+        run: bash ./ci.sh
