@@ -6,3 +6,6 @@
 <!-- ![Diagram Image Link](diagram.pum) -->
 
 ![your-UML-diagram-name](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/jonashackt/plantuml-markdown/master/example-uml.iuml)
+![your-UML-diagram-name](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/jonashackt/plantuml-markdown/master/example-uml.iuml)
+
+![img](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/scottgibb/ci_playground/main/diagram.puml)
