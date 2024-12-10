@@ -3,7 +3,8 @@ on:
     - main
 jobs:
   embed-puml-markdown:
-  uses: ubuntu-latest
+  runs-on: ubuntu-latest
+  steps:
     - name: Check out the repo
       uses: actions/checkout@v2
       with:
