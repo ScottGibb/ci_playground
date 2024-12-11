@@ -8,8 +8,8 @@ on:
 permissions:
   contents: write
   
-jobs:
-  tests:
+jobs: 
+  tests: 
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v4

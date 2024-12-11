@@ -2,6 +2,11 @@ pub fn add(left: u64, right: u64) -> u64 {
     left + right
 }
 
+pub fn main() {
+    let result = add(2, 2);
+    println!("Result: {}", result);
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -17,9 +22,4 @@ mod tests {
     //     let result = add(2, 2);
     //     assert_eq!(result, 4);
     // }
-}
-
-pub fn main() {
-    let result = add(2, 2);
-    println!("Result: {}", result);
 }
