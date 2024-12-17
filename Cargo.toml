@@ -6,3 +6,4 @@ description = "A playground for learning CI/CD and publishing packages to crates
 license = "MIT"
 [dependencies]
 
+rppal = "0.20.1"
