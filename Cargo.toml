@@ -5,5 +5,5 @@ edition = "2021"
 description = "A playground for learning CI/CD and publishing packages to crates.io"
 license = "MIT"
 [dependencies]
-rppal = "0.20.1"
+rppal = "0.22.1"
 
