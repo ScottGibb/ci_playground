@@ -12,7 +12,7 @@ jobs:
   tests: 
         runs-on: ubuntu-latest
         steps:
-          - uses: actions/checkout@v4
+          - uses: actions/checkout@v5
           - name: Install nightly
             run: rustup toolchain add --component=rustfmt nightly
           - name: Checks
@@ -26,7 +26,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     
     - name: Set up Rust
       uses: dtolnay/rust-toolchain@stable
